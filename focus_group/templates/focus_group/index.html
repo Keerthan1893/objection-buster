@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pixii | AI Objection Buster</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: radial-gradient(circle at top left, #0f172a, #020617);
+            color: #f8fafc;
+            min-height: 100vh;
+        }
+        .glass {
+            background: rgba(255, 255, 255, 0.03);
+            -webkit-backdrop-filter: blur(12px);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            -webkit-backdrop-filter: blur(8px);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .glass-card:hover {
+            background: rgba(255, 255, 255, 0.08);
+            transform: translateY(-4px);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+        .gradient-text {
+            background: linear-gradient(135deg, #60a5fa, #c084fc);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            transition: all 0.3s ease;
+        }
+        .btn-primary:hover {
+            box-shadow: 0 0 20px rgba(139, 92, 246, 0.4);
+            transform: scale(1.02);
+        }
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+        .animate-shimmer {
+            background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.05) 50%, rgba(255,255,255,0) 100%);
+            background-size: 200% 100%;
+            animation: shimmer 2s infinite linear;
+        }
+    </style>
+</head>
+<body class="p-6 md:p-12 overflow-x-hidden">
+<div class="max-w-6xl mx-auto">
+    
+    <!-- Header Area -->
+    <header class="mb-12 flex flex-col md:flex-row md:items-center justify-between gap-6">
+        <div>
+            <div class="flex items-center gap-3 mb-2">
+                <div class="w-10 h-10 rounded-xl bg-blue-600 flex items-center justify-center font-bold text-xl shadow-lg shadow-blue-500/20">P</div>
+                <h1 class="text-3xl font-extrabold tracking-tight">Objection Buster <span class="gradient-text">Pro</span></h1>
+            </div>
+            <p class="text-slate-400 max-w-xl">Deploy an autonomous swarm of AI buyer personas to stress-test your product before you launch. Built for Pixii.</p>
+        </div>
+        <div class="flex gap-4">
+            <div class="glass px-4 py-2 rounded-full border border-white/5 flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+                <span class="text-xs font-semibold text-slate-300">Live Scraper Active</span>
+            </div>
+            <div class="glass px-4 py-2 rounded-full border border-white/5 flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></span>
+                <span class="text-xs font-semibold text-slate-300">Agent Swarm Active</span>
+            </div>
+        </div>
+    </header>
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+        <!-- Input Section -->
+        <div class="lg:col-span-4 space-y-6">
+            <div class="glass p-6 rounded-3xl border border-white/10 relative overflow-hidden">
+                <div class="absolute top-0 right-0 p-4">
+                    <button onclick="fillExample()" class="text-[10px] uppercase tracking-widest font-bold text-blue-400 hover:text-blue-300 transition">
+                        ⚡ Load Demo
+                    </button>
+                </div>
+                
+                <h3 class="text-lg font-bold mb-6 flex items-center gap-2">
+                    <svg class="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path></svg>
+                    Product Specs
+                </h3>
+
+                <div class="space-y-4">
+                    <div>
+                        <label class="text-xs font-bold text-slate-500 uppercase tracking-widest mb-2 block">Product Name</label>
+                        <input type="text" id="pName" placeholder="e.g. AuraGlow Mask" class="w-full bg-white/5 border border-white/10 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition">
+                    </div>
+                    <div>
+                        <label class="text-xs font-bold text-slate-500 uppercase tracking-widest mb-2 block">Product URL (Optional)</label>
+                        <input type="url" id="pUrl" placeholder="https://amazon.com/..." class="w-full bg-white/5 border border-white/10 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition">
+                    </div>
+                    <div>
+                        <label class="text-xs font-bold text-slate-500 uppercase tracking-widest mb-2 block">Value Proposition</label>
+                        <textarea id="pDesc" placeholder="Paste features, price, and descriptions..." class="w-full bg-white/5 border border-white/10 rounded-xl p-3 h-48 focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition resize-none"></textarea>
+                    </div>
+                    <button id="submitBtn" onclick="startPreflight()" class="btn-primary w-full py-4 rounded-xl font-bold text-white shadow-xl">
+                        Deploy Agent Swarm
+                    </button>
+                </div>
+            </div>
+
+            <!-- Market Intelligence Sidecard (Future) -->
+            <div id="marketIntel" class="glass p-6 rounded-3xl border border-white/10 hidden">
+                <h3 class="text-sm font-bold text-slate-400 uppercase tracking-widest mb-4">Market Intelligence</h3>
+                <div id="intelContent" class="space-y-3 text-sm text-slate-300">
+                    <!-- Research data goes here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Results Section -->
+        <div class="lg:col-span-8">
+            <!-- Loading State -->
+            <div id="loading" class="hidden h-full flex flex-col items-center justify-center glass rounded-3xl border border-dashed border-white/20 p-12 text-center">
+                <div class="relative w-24 h-24 mb-8">
+                    <div class="absolute inset-0 rounded-full border-4 border-blue-500/20"></div>
+                    <div class="absolute inset-0 rounded-full border-4 border-t-blue-500 animate-spin"></div>
+                </div>
+                <h2 class="text-2xl font-bold mb-2">Analyzing Objections</h2>
+                <p class="text-slate-400 animate-pulse">Our agents are scouring Amazon market data and simulating buyer psychology...</p>
+            </div>
+
+            <!-- Final Report -->
+            <div id="results" class="hidden space-y-6">
+                <div class="flex items-center justify-between mb-2">
+                    <h2 class="text-2xl font-extrabold">Pixii Analysis Report</h2>
+                    <!-- Intent Score Removed -->
+                </div>
+
+                <!-- Executive Summary -->
+                <div id="summaryCard" class="glass-card p-6 rounded-3xl border border-white/10 hidden">
+                    <h3 class="text-lg font-bold text-slate-200 mb-2">Executive Summary</h3>
+                    <p id="overallSummary" class="text-sm text-slate-400 mb-6"></p>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                        <div class="bg-green-500/10 border border-green-500/20 rounded-2xl p-4">
+                            <h4 class="text-xs font-bold text-green-400 uppercase tracking-widest mb-3 flex items-center gap-2">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                                Strengths
+                            </h4>
+                            <ul id="prosList" class="space-y-2 text-sm text-slate-300 list-disc list-inside"></ul>
+                        </div>
+                        <div class="bg-red-500/10 border border-red-500/20 rounded-2xl p-4">
+                            <h4 class="text-xs font-bold text-red-400 uppercase tracking-widest mb-3 flex items-center gap-2">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                                Weaknesses
+                            </h4>
+                            <ul id="consList" class="space-y-2 text-sm text-slate-300 list-disc list-inside"></ul>
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="bg-blue-500/10 border border-blue-500/20 rounded-2xl p-4">
+                            <h4 class="text-xs font-bold text-blue-400 uppercase tracking-widest mb-3 flex items-center gap-2">
+                                💰 Pricing Strategy
+                            </h4>
+                            <ul id="pricingList" class="space-y-2 text-sm text-slate-300 list-disc list-inside"></ul>
+                        </div>
+                        <div class="bg-purple-500/10 border border-purple-500/20 rounded-2xl p-4">
+                            <h4 class="text-xs font-bold text-purple-400 uppercase tracking-widest mb-3 flex items-center gap-2">
+                                🚀 Upgrade Suggestions
+                            </h4>
+                            <ul id="upgradeList" class="space-y-2 text-sm text-slate-300 list-disc list-inside"></ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <h3 class="text-lg font-bold mt-8 mb-4">Detailed Persona Feedback</h3>
+                <div id="feedbackGrid" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div>
+            </div>
+
+            <!-- Empty State -->
+            <div id="emptyState" class="h-full flex flex-col items-center justify-center glass rounded-3xl border border-white/5 p-12 text-center">
+                <div class="w-16 h-16 rounded-2xl bg-white/5 flex items-center justify-center mb-6 text-3xl">🤖</div>
+                <h2 class="text-xl font-bold mb-2 text-slate-300">Ready for Launch?</h2>
+                <p class="text-slate-500 max-w-sm">Enter your product details to see how real buyers will react.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function fillExample() {
+        document.getElementById('pName').value = "TitanX Foldable Treadmill";
+        document.getElementById('pUrl').value = "https://www.amazon.com/dp/B08F2QL16W";
+        document.getElementById('pDesc').value = "A heavy-duty home treadmill that folds flat to fit under a bed. Features a 3.5HP quiet motor, 15 levels of incline, and an 18-inch touch screen with global trails. Price: $999. Worried about: Shipping cost, motor noise, and floor space.";
+    }
+
+    async function startPreflight() {
+        const name = document.getElementById('pName').value;
+        const url = document.getElementById('pUrl').value;
+        const desc = document.getElementById('pDesc').value;
+        const btn = document.getElementById('submitBtn');
+
+        if(!name || !desc) return alert('Please fill all required fields');
+
+        btn.disabled = true;
+        btn.innerHTML = '<span class="animate-pulse">Deploying...</span>';
+        
+        document.getElementById('emptyState').classList.add('hidden');
+        document.getElementById('loading').classList.remove('hidden');
+        document.getElementById('results').classList.add('hidden');
+        document.getElementById('summaryCard').classList.add('hidden');
+
+        try {
+            const res = await fetch('/api/start/', {
+                method: 'POST',
+                body: JSON.stringify({product_name: name, product_url: url, product_desc: desc}),
+                headers: {'Content-Type': 'application/json'}
+            });
+            const data = await res.json();
+            if (res.ok) pollStatus(data.run_id);
+            else throw new Error();
+        } catch (error) {
+            alert('Error connecting to server.');
+            resetUI();
+        }
+    }
+
+    function pollStatus(runId) {
+        const interval = setInterval(async () => {
+            try {
+                const res = await fetch(`/api/status/${runId}/`);
+                const data = await res.json();
+                if (data.status === 'completed') {
+                    clearInterval(interval);
+                    renderResults(data);
+                } else if (data.status === 'failed') {
+                    clearInterval(interval);
+                    resetUI();
+                }
+            } catch (error) {
+                clearInterval(interval);
+                resetUI();
+            }
+        }, 2000);
+    }
+
+    function renderResults(data) {
+        document.getElementById('loading').classList.add('hidden');
+        document.getElementById('results').classList.remove('hidden');
+        // avgScore removed
+        
+        // Render Market Intelligence Sidebar
+        if (data.research_data) {
+            const intelSection = document.getElementById('marketIntel');
+            const intelContent = document.getElementById('intelContent');
+            intelSection.classList.remove('hidden');
+            
+            // Simple parsing of research data into bullet points
+            const bullets = data.research_data.split('.').slice(0, 4); // Get first 4 points
+            intelContent.innerHTML = bullets.map(b => b.trim().length > 10 ? `<div class="flex gap-2 p-2 rounded bg-white/5 border border-white/5"><span class="text-blue-400">⚡</span><p>${b.trim()}.</p></div>` : '').join('');
+        }
+
+        resetUI(false);
+        
+        if (data.summary) {
+            document.getElementById('summaryCard').classList.remove('hidden');
+            document.getElementById('overallSummary').innerText = data.summary;
+            document.getElementById('prosList').innerHTML = data.pros.map(p => `<li>${p}</li>`).join('');
+            document.getElementById('consList').innerHTML = data.cons.map(c => `<li>${c}</li>`).join('');
+            document.getElementById('pricingList').innerHTML = data.pricing_strategy ? data.pricing_strategy.map(p => `<li>${p}</li>`).join('') : '';
+            document.getElementById('upgradeList').innerHTML = data.upgrade_suggestions ? data.upgrade_suggestions.map(u => `<li>${u}</li>`).join('') : '';
+        }
+        
+        const grid = document.getElementById('feedbackGrid');
+        grid.innerHTML = '';
+        data.results.forEach(f => {
+            grid.innerHTML += `
+                <div class="glass-card p-6 rounded-3xl space-y-4">
+                    <div class="flex justify-between items-start">
+                        <h3 class="font-bold text-xl">${f.persona}</h3>
+                    </div>
+                    
+                    <div class="space-y-2">
+                        <p class="text-xs font-bold text-red-400 uppercase tracking-tighter">Primary Objection</p>
+                        <p class="text-sm text-slate-300">${f.objection}</p>
+                    </div>
+                </div>
+            `;
+        });
+    }
+
+    function resetUI(showEmpty = true) {
+        document.getElementById('loading').classList.add('hidden');
+        const btn = document.getElementById('submitBtn');
+        btn.disabled = false;
+        btn.innerText = "Deploy Agent Swarm";
+        if(showEmpty) document.getElementById('emptyState').classList.remove('hidden');
+    }
+</script>
+</body>
+</html>

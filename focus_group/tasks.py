@@ -102,7 +102,7 @@ def run_agent_swarm(run_id):
                         {"role": "user", "content": f"Product: {run.product_name}. Description: {run.product_desc}"}
                     ]
                 },
-                timeout=60
+                timeout=120
             )
             
             if response.status_code != 200:

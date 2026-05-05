@@ -13,9 +13,7 @@ def run_agent_swarm(run_id):
         api_key = os.getenv('OPENROUTER_API_KEY')
         tavily_key = os.getenv('TAVILY_API_KEY')
         
-        # ==========================================
-        # TOOL 1: LIVE MARKET RESEARCH (APIFY / TAVILY)
-        # ==========================================
+        
         live_market_data = "No live market data available."
         apify_token = os.getenv('APIFY_API_TOKEN')
         
@@ -49,7 +47,7 @@ def run_agent_swarm(run_id):
                 print("Apify Error:", e)
 
         if live_market_data == "No live market data available." and tavily_key:
-            # Fallback to Tavily if no URL or Apify fails
+            
             try:
                 search_response = requests.post(
                     "https://api.tavily.com/search",
@@ -71,9 +69,8 @@ def run_agent_swarm(run_id):
             except Exception as e:
                 print(f"Tavily Request Failed: {e}")
 
-        # ==========================================
-        # TOOL 2: THE AGENT SWARM (OPENROUTER API)
-        # ==========================================
+      
+       
         personas = [
             {"role": "The Budget Shopper", "prompt": "You are a price-sensitive Amazon shopper. Identify a financial hesitation."},
             {"role": "The Skeptic", "prompt": "You assume e-commerce products are low quality. Find a potential flaw in durability."},
@@ -147,9 +144,7 @@ def run_agent_swarm(run_id):
                 objection=res["objection"]
             )
             
-        # ==========================================
-        # TOOL 3: SUMMARY GENERATION
-        # ==========================================
+       
         all_feedbacks = AgentFeedback.objects.filter(run=run)
         feedback_text = "\n".join([f"{f.persona} ({f.intent_score}% intent): {f.objection}" for f in all_feedbacks])
         

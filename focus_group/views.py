@@ -5,6 +5,7 @@ from rest_framework import status
 from .models import PreflightRun
 from .serializers import PreflightRunSerializer, AgentFeedbackSerializer
 from .tasks import run_agent_swarm
+import threading
 
 def index(request):
     """Serves the HTML frontend."""
@@ -12,11 +13,16 @@ def index(request):
 
 @api_view(['POST'])
 def start_run(request):
-    """Validates data and hands off to Celery."""
+    """Validates data and hands off to background thread."""
     serializer = PreflightRunSerializer(data=request.data)
     if serializer.is_valid():
         run = serializer.save()
-        run_agent_swarm.delay(run.id) 
+        
+        # Use a simple Python thread instead of Celery!
+        # This completely bypasses the 512MB RAM crash on Render
+        thread = threading.Thread(target=run_agent_swarm, args=(run.id,))
+        thread.start()
+        
         return Response({'run_id': run.id}, status=status.HTTP_202_ACCEPTED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -36,7 +42,7 @@ def check_status(request, run_id):
         avg_score = sum(f['intent_score'] for f in feedback_data) // len(feedback_data) if feedback_data else 0
         response_data['results'] = feedback_data
         response_data['avg_score'] = avg_score
-        response_data['research_data'] = run.research_data # RETURN RESEARCH
+        response_data['research_data'] = run.research_data
         response_data['summary'] = run.summary
         try:
             import json

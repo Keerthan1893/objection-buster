@@ -96,13 +96,13 @@ def run_agent_swarm(run_id):
                 url="https://openrouter.ai/api/v1/chat/completions",
                 headers={"Authorization": f"Bearer {api_key}"},
                 json={
-                    "model": "openrouter/free", # Fast model
+                    "model": "openrouter/free",
                     "messages": [
                         {"role": "system", "content": system_prompt},
                         {"role": "user", "content": f"Product: {run.product_name}. Description: {run.product_desc}"}
                     ]
                 },
-                timeout=30
+                timeout=60
             )
             
             if response.status_code != 200:
